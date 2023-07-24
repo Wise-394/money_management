@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/Database/goal_dbcode.dart';
 import 'package:money_management/components/add_goal_sheet.dart';
 import 'package:money_management/screen/tiles/goal_tile.dart';
 import 'package:money_management/states/total_money_state.dart';
@@ -11,6 +12,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var totalMoneyState = context.watch<TotalMoneyState>();
     var totalMoney = totalMoneyState.totalMoney;
+    var goalDB = GoalDB();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -20,20 +22,21 @@ class HomePage extends StatelessWidget {
         Card(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.zero)),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: HomeMainTile(totalMoney: totalMoney),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: HomeMainTile(totalMoney: totalMoney),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GoalTile(
-            goalTitle: 'Title Text',
-            goalTarget: 10000,
+        Expanded(
+          child: ListView.builder(
+            itemCount: goalDB.goalList.length,
+            itemBuilder: (context, index) {
+              return GoalTile(
+                goalTarget: goalDB.goalList[index].goalTarget,
+                goalTitle: goalDB.goalList[index].goalTitle,
+                goalBalance: 0,
+              );
+            },
           ),
         ),
       ]),
@@ -46,12 +49,13 @@ class HomeMainTile extends StatelessWidget {
   void showAddBottomSheet(BuildContext context) {
     showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext context) {
           return const AddGoalBottomSheet();
         });
   }
 
-  const HomeMainTile({
+  HomeMainTile({
     super.key,
     required this.totalMoney,
   });
