@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class GoalTile extends StatefulWidget {
-  const GoalTile({super.key});
+  final String goalTitle;
+  final double goalTarget;
+  final double goalBalance;
+  GoalTile({
+    super.key,
+    required this.goalTitle,
+    required this.goalTarget,
+    this.goalBalance = 0,
+  });
 
   @override
   State<GoalTile> createState() => _GoalTile();
@@ -15,16 +23,17 @@ class _GoalTile extends State<GoalTile> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            const Row(
+            Row(
               children: [
-                Text('Goal Title'),
+                Text(widget.goalTitle),
               ],
             ),
-            const Row(
+            Row(
               children: [
-                Text('money balabce/Target Goal'),
-                Spacer(),
-                Text('X%'),
+                Text(widget.goalBalance.toString()),
+                const Spacer(),
+                Text(widget.goalTarget.toString()),
+                const Text('  | X%'),
               ],
             ),
             Row(
