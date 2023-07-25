@@ -26,4 +26,10 @@ class AppState extends ChangeNotifier {
     print('New goal added: ${goalEntity.goalTitle} (${goalEntity.goalTarget})');
     notifyListeners();
   }
+
+  void deleteGoalToListState(int index) {
+    goalList.removeAt(index);
+    print(' goal removed: ${goalList[index].goalTitle}');
+    notifyListeners();
+  }
 }
