@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/Database/goal_entity.dart';
-import 'package:money_management/states/state.dart';
-import 'package:provider/provider.dart';
-
-class AddGoalSheetLogic {
-  void onSave(
-    final BuildContext context,
-    final TextEditingController goalTitle,
-    final TextEditingController goalTarget,
-  ) {
-    if (goalTitle.text.isNotEmpty && goalTarget.text.isNotEmpty) {
-      var appState = Provider.of<AppState>(context, listen: false);
-      var goal = GoalEntity(goalTitle.text, double.parse(goalTarget.text));
-      appState.addGoalToListState(goal);
-    }
-  }
-}
+import 'package:money_management/logic/add_goal_sheet._logic.dart';
 
 class AddGoalBottomSheet extends StatefulWidget {
   const AddGoalBottomSheet({Key? key}) : super(key: key);
@@ -25,21 +9,19 @@ class AddGoalBottomSheet extends StatefulWidget {
 }
 
 class _AddGoalBottomSheetState extends State<AddGoalBottomSheet> {
-  late AddGoalSheetLogic addGoalSheetLogic;
+  late GoalSheetLogic addGoalSheetLogic;
   final goalTitle = TextEditingController();
   final goalTarget = TextEditingController();
+
+  void onPressSaveButton() {
+    addGoalSheetLogic.onSaveGoal(goalTitle, goalTarget);
+    Navigator.of(context).pop();
+  }
 
   @override
   void initState() {
     super.initState();
-    // Pass the context to AddGoalSheetLogic constructor
-    addGoalSheetLogic = AddGoalSheetLogic();
-  }
-
-  void onPressSaveButton() {
-    addGoalSheetLogic.onSave(
-        context, goalTitle, goalTarget); // Pass the context here
-    Navigator.of(context).pop();
+    addGoalSheetLogic = GoalSheetLogic(context);
   }
 
   @override
