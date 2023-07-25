@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/states/total_money_state.dart';
+import 'package:money_management/states/state.dart';
 import 'package:provider/provider.dart';
 import 'screen/main_scaffold.dart';
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => TotalMoneyState(),
+      create: (context) => AppState(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

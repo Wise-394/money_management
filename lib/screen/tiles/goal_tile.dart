@@ -4,7 +4,7 @@ class GoalTile extends StatefulWidget {
   final String goalTitle;
   final double goalTarget;
   final double goalBalance;
-  GoalTile({
+  const GoalTile({
     super.key,
     required this.goalTitle,
     required this.goalTarget,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/Database/goal_entity.dart';
 
-class TotalMoneyState extends ChangeNotifier {
+class AppState extends ChangeNotifier {
   var totalMoney = 0;
 
   void initTotalMoney(int newTotalMoney) {
@@ -15,6 +16,14 @@ class TotalMoneyState extends ChangeNotifier {
 
   void subtractTotalMoney(int totalMoneyToSubtract) {
     totalMoney -= totalMoneyToSubtract;
+    notifyListeners();
+  }
+
+  //goal list related
+  List<GoalEntity> goalList = [];
+  void addGoalToListState(GoalEntity goalEntity) {
+    goalList.add(goalEntity);
+    print('New goal added: ${goalEntity.goalTitle} (${goalEntity.goalTarget})');
     notifyListeners();
   }
 }

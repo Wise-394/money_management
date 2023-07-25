@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/Database/goal_dbcode.dart';
 import 'package:money_management/components/add_goal_sheet.dart';
 import 'package:money_management/screen/tiles/goal_tile.dart';
-import 'package:money_management/states/total_money_state.dart';
+import 'package:money_management/states/state.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,36 +9,42 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var totalMoneyState = context.watch<TotalMoneyState>();
-    var totalMoney = totalMoneyState.totalMoney;
-    var goalDB = GoalDB();
+    // Listen to changes in AppState
+    var appState = context.watch<AppState>();
+
+    var totalMoney = appState.totalMoney;
+    var goal = appState.goalList;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Center(child: Text('Goals')),
+        title: Center(child: Text('Goal Count: ${goal.length}')),
       ),
-      body: Column(children: [
-        Card(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.zero)),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: HomeMainTile(totalMoney: totalMoney),
+      body: Column(
+        children: [
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.zero),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: HomeMainTile(totalMoney: totalMoney),
+            ),
           ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: goalDB.goalList.length,
-            itemBuilder: (context, index) {
-              return GoalTile(
-                goalTarget: goalDB.goalList[index].goalTarget,
-                goalTitle: goalDB.goalList[index].goalTitle,
-                goalBalance: 0,
-              );
-            },
+          Expanded(
+            child: ListView.builder(
+              itemCount: goal.length,
+              itemBuilder: (context, index) {
+                return GoalTile(
+                  goalTitle: goal[index].goalTitle,
+                  goalTarget: goal[index].goalTarget,
+                  goalBalance: 0,
+                );
+              },
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }
@@ -55,7 +60,7 @@ class HomeMainTile extends StatelessWidget {
         });
   }
 
-  HomeMainTile({
+  const HomeMainTile({
     super.key,
     required this.totalMoney,
   });
