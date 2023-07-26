@@ -28,8 +28,8 @@ class AppState extends ChangeNotifier {
   }
 
   void deleteGoalToListState(int index) {
-    goalList.removeAt(index);
     print(' goal removed: ${goalList[index].goalTitle}');
+    goalList.removeAt(index);
     notifyListeners();
   }
 }

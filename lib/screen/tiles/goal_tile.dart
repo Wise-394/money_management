@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/logic/add_goal_sheet._logic.dart';
 
 class GoalTile extends StatefulWidget {
+  final VoidCallback deleteFunction;
+  final BuildContext context;
   final String goalTitle;
   final double goalTarget;
   final double goalBalance;
+
   const GoalTile({
-    super.key,
+    Key? key,
     required this.goalTitle,
     required this.goalTarget,
     this.goalBalance = 0,
-  });
+    required this.context,
+    required this.deleteFunction,
+  }) : super(key: key);
 
   @override
   State<GoalTile> createState() => _GoalTile();
@@ -39,7 +45,8 @@ class _GoalTile extends State<GoalTile> {
             Row(
               children: [
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed:
+                      widget.deleteFunction, // Fix the onPressed callback here
                   child: const Icon(Icons.delete),
                 ),
                 OutlinedButton(
