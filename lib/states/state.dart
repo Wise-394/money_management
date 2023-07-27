@@ -32,4 +32,10 @@ class AppState extends ChangeNotifier {
     goalList.removeAt(index);
     notifyListeners();
   }
+
+  void cashInState(int index, double amount) {
+    goalList[index].goalBalance += amount;
+    print('added balance ${goalList[index].goalBalance}');
+    notifyListeners();
+  }
 }
