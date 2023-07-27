@@ -6,8 +6,8 @@ import 'package:money_management/states/state.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+  HomePage({super.key});
+  final TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // Listen to changes in AppState
@@ -16,7 +16,6 @@ class HomePage extends StatelessWidget {
     var totalMoney = appState.totalMoney;
     var goal = appState.goalList;
     final goalSheetLogic = GoalSheetLogic(context);
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -38,6 +37,8 @@ class HomePage extends StatelessWidget {
               itemCount: goal.length,
               itemBuilder: (context, index) {
                 return GoalTile(
+                  cashInFunction: () =>
+                      goalSheetLogic.onCashIn(textController, index),
                   deleteFunction: () => goalSheetLogic.onDeleteGoal(index),
                   context: context,
                   goalTitle: goal[index].goalTitle,

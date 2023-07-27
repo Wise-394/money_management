@@ -27,11 +27,13 @@ class GoalSheetLogic {
     appState.deleteGoalToListState(index);
   }
 
-  void onCashIn() {
+  void onCashIn(TextEditingController controller, int index) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const InputDialog(
+        return InputDialog(
+          trueAction: () => onSaveCashIn(index, controller.text),
+          textEditingController: controller,
           dialogTitle: 'Cash in',
           dialogHintText: 'Enter Amount Here',
           dialogTextBody: 'How much to cash in?',
@@ -40,9 +42,11 @@ class GoalSheetLogic {
     );
   }
 
-  void onSaveCashIn(int index, double cashInAmount) {
+  void onSaveCashIn(int index, String controllerText) {
+    double cashInAmount = double.parse(controllerText);
     if (cashInAmount != 0) {
       appState.cashInState(index, cashInAmount);
     }
+    Navigator.pop(context);
   }
 }

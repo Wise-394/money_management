@@ -10,11 +10,7 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffold extends State<MainScaffold> {
   var _currentPageIndex = 0;
-  List<Widget> body = [
-    const HomePage(),
-    const Placeholder(),
-    const Placeholder()
-  ];
+  List<Widget> body = [HomePage(), const Placeholder(), const Placeholder()];
 
   void _changeIndex(int index) {
     setState(() {
