@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_management/Database/goal_entity.dart';
+import 'package:money_management/components/input_dialog.dart';
 import 'package:money_management/states/state.dart';
 import 'package:provider/provider.dart';
 
@@ -24,5 +25,14 @@ class GoalSheetLogic {
 
   void onDeleteGoal(int index) {
     appState.deleteGoalToListState(index);
+  }
+
+  void onCashIn() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const InputDialog(dialogTitle: 'test', dialogHintText: 'test');
+      },
+    );
   }
 }

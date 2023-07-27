@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_management/components/add_goal_sheet.dart';
-import 'package:money_management/logic/add_goal_sheet._logic.dart';
+import 'package:money_management/logic/goal_sheet._logic.dart';
 import 'package:money_management/screen/tiles/goal_tile.dart';
 import 'package:money_management/states/state.dart';
 import 'package:provider/provider.dart';

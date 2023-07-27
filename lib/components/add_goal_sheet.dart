@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/logic/add_goal_sheet._logic.dart';
+import 'package:money_management/logic/goal_sheet._logic.dart';
 
 class AddGoalBottomSheet extends StatefulWidget {
   const AddGoalBottomSheet({Key? key}) : super(key: key);

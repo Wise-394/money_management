@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/logic/add_goal_sheet._logic.dart';
+import 'package:money_management/logic/goal_sheet._logic.dart';
 
 class GoalTile extends StatefulWidget {
   final VoidCallback deleteFunction;
@@ -22,6 +22,14 @@ class GoalTile extends StatefulWidget {
 }
 
 class _GoalTile extends State<GoalTile> {
+  late GoalSheetLogic goalSheetLogic;
+
+  @override
+  void initState() {
+    super.initState();
+    goalSheetLogic = GoalSheetLogic(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -59,7 +67,7 @@ class _GoalTile extends State<GoalTile> {
                 ),
                 const Spacer(),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () => goalSheetLogic.onCashIn(),
                   child: const Icon(Icons.attach_money),
                 ),
               ],
