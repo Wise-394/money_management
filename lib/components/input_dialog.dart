@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/states/state.dart';
 
 class InputDialog extends StatefulWidget {
   final String dialogTitle;
   final String dialogHintText;
+  final String dialogTextBody;
   const InputDialog({
     super.key,
     required this.dialogTitle,
     required this.dialogHintText,
+    required this.dialogTextBody,
   });
 
   @override
@@ -21,6 +24,7 @@ class _InputDialog extends State<InputDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Text(widget.dialogTextBody),
           TextField(
             decoration: InputDecoration(
               enabledBorder: const OutlineInputBorder(borderSide: BorderSide()),

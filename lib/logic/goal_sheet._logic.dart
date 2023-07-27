@@ -18,7 +18,7 @@ class GoalSheetLogic {
     final TextEditingController goalTarget,
   ) {
     if (goalTitle.text.isNotEmpty && goalTarget.text.isNotEmpty) {
-      var goal = GoalEntity(goalTitle.text, double.parse(goalTarget.text));
+      var goal = GoalEntity(goalTitle.text, double.parse(goalTarget.text), 0.0);
       appState.addGoalToListState(goal);
     }
   }
@@ -31,8 +31,18 @@ class GoalSheetLogic {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const InputDialog(dialogTitle: 'test', dialogHintText: 'test');
+        return const InputDialog(
+          dialogTitle: 'Cash in',
+          dialogHintText: 'Enter Amount Here',
+          dialogTextBody: 'How much to cash in?',
+        );
       },
     );
+  }
+
+  void onSaveCashIn(int index, double cashInAmount) {
+    if (cashInAmount != 0) {
+      appState.cashInState(index, cashInAmount);
+    }
   }
 }
