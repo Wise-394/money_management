@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:money_management/Database/goal_entity.dart';
 
 class AppState extends ChangeNotifier {
-  var totalMoney = 0;
+  double totalMoney = 0.0;
 
-  void initTotalMoney(int newTotalMoney) {
+  void initTotalMoney(double newTotalMoney) {
     totalMoney = newTotalMoney;
     notifyListeners();
   }
@@ -35,6 +35,7 @@ class AppState extends ChangeNotifier {
 
   void cashInState(int index, double amount) {
     goalList[index].goalBalance += amount;
+    totalMoney += amount;
     print('added balance ${goalList[index].goalBalance}');
     notifyListeners();
   }
