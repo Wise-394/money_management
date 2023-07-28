@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/Database/goal_entity.dart';
 import 'package:money_management/states/state.dart';
 import 'package:provider/provider.dart';
 import 'screen/main_scaffold.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Hive.registerAdapter(GoalEntityAdapter());
+  await Hive.openBox('GOALDBBOX');
+
   runApp(const MyApp());
 }
 
