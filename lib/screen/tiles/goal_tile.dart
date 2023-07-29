@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/logic/goal_sheet._logic.dart';
 
 class GoalTile extends StatefulWidget {
   final VoidCallback cashInFunction;
@@ -40,8 +39,7 @@ class _GoalTile extends State<GoalTile> {
               children: [
                 Text(widget.goalBalance.toString()),
                 const Spacer(),
-                Text(widget.goalTarget.toString()),
-                const Text('  | X%'),
+                Text('${(widget.goalBalance / widget.goalTarget) * 100}%'),
               ],
             ),
             Row(

@@ -13,6 +13,9 @@ class GoalSheetLogic {
     appState = Provider.of<AppState>(context, listen: false);
   }
 
+  double calculatePercentage(double balance, double target) =>
+      (balance * target) / 100;
+
   void onSaveGoal(
     final TextEditingController goalTitle,
     final TextEditingController goalTarget,
@@ -20,6 +23,8 @@ class GoalSheetLogic {
     if (goalTitle.text.isNotEmpty && goalTarget.text.isNotEmpty) {
       var goal = GoalEntity(goalTitle.text, double.parse(goalTarget.text), 0.0);
       appState.addGoalToListState(goal);
+      goalTitle.clear();
+      goalTarget.clear();
     }
   }
 
@@ -32,7 +37,7 @@ class GoalSheetLogic {
       context: context,
       builder: (BuildContext context) {
         return InputDialog(
-          trueAction: () => onSaveCashIn(index, controller.text),
+          trueAction: () => onSaveCashIn(index, controller),
           textEditingController: controller,
           dialogTitle: 'Cash in',
           dialogHintText: 'Enter Amount Here',
@@ -42,10 +47,13 @@ class GoalSheetLogic {
     );
   }
 
-  void onSaveCashIn(int index, String controllerText) {
-    double cashInAmount = double.parse(controllerText);
-    if (cashInAmount != 0) {
+  void onSaveCashIn(int index, TextEditingController controllerText) {
+    if (controllerText.text.isNotEmpty) {
+      String controllerTextStr = controllerText.text;
+      double cashInAmount = double.parse(controllerTextStr);
+
       appState.cashInState(index, cashInAmount);
+      controllerText.clear();
     }
     Navigator.pop(context);
   }

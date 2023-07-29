@@ -3,26 +3,39 @@ import 'package:money_management/Database/goal_entity.dart';
 import 'package:money_management/Database/goal_dbcode.dart';
 
 class AppState extends ChangeNotifier {
+  final dbGoalCode = GoalDB();
   double totalMoney = 0.0;
 
-  void initTotalMoney(double newTotalMoney) {
-    totalMoney = newTotalMoney;
-    notifyListeners();
+  void initTotalMoney() {
+    totalMoney = dbGoalCode.loadTotalMoney();
+    print('init total money is $totalMoney');
   }
 
-  void addTotalMoney(int totalMoneyToAdd) {
+  void addTotalMoney(double totalMoneyToAdd) {
     totalMoney += totalMoneyToAdd;
+    print('updated total, totalmoneyTOAdd $totalMoneyToAdd');
+    dbGoalCode.updateTotalMoney(
+        totalMoney); // Move this line after updating totalMoney
     notifyListeners();
+    print('updated total money is $totalMoney');
   }
 
-  void subtractTotalMoney(int totalMoneyToSubtract) {
+  void subtractTotalMoney(double totalMoneyToSubtract) {
     totalMoney -= totalMoneyToSubtract;
+    dbGoalCode.updateTotalMoney(
+        totalMoney); // Move this line after updating totalMoney
     notifyListeners();
+    print('updated total money is $totalMoney');
+  }
+
+  //for debug
+  void resetTotalMoney() {
+    totalMoney = 0;
+    dbGoalCode.updateTotalMoney(0);
   }
 
   //goal list related
   List<GoalEntity> goalList = [];
-  final dbGoalCode = GoalDB();
   void addGoalToListState(GoalEntity goalEntity) {
     goalList.add(goalEntity);
     print('New goal added: ${goalEntity.goalTitle} (${goalEntity.goalTarget})');
@@ -32,6 +45,7 @@ class AppState extends ChangeNotifier {
 
   void deleteGoalToListState(int index) {
     print(' goal removed: ${goalList[index].goalTitle}');
+    subtractTotalMoney(totalMoney -= goalList[index].goalBalance);
     goalList.removeAt(index);
     dbGoalCode.updateGoalDB(goalList);
     notifyListeners();
@@ -39,16 +53,15 @@ class AppState extends ChangeNotifier {
 
   void cashInState(int index, double amount) {
     goalList[index].goalBalance += amount;
-    totalMoney += amount;
-    print('added balance ${goalList[index].goalBalance}');
+    addTotalMoney(amount);
+    print('added balance: new balance is ${goalList[index].goalBalance}');
+    print('added balance: balance added is $amount');
     dbGoalCode.updateGoalDB(goalList);
     notifyListeners();
   }
 
   void loadGoalState() {
-    if (goalList.isEmpty) {
-      goalList = dbGoalCode.loadGoalDB();
-      print('db succesfully loaded ${goalList.length}');
-    }
+    goalList = dbGoalCode.loadGoalDB();
+    print('db succesfully loaded ${goalList.length}');
   }
 }

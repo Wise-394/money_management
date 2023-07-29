@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     // Load the goalList when the HomePage is created
     context.read<AppState>().loadGoalState();
+    context.read<AppState>().initTotalMoney();
   }
 
   @override

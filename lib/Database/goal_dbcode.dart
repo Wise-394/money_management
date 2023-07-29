@@ -9,10 +9,15 @@ class GoalDB {
   }
 
   List<GoalEntity> loadGoalDB() {
-    final dynamic data = _goalDbBox.get('GOALLIST');
-    if (data == null) {
-      return []; // Return an empty list if data is null
-    }
-    return data.cast<GoalEntity>();
+    List<GoalEntity> goalList =
+        _goalDbBox.get('GOALLIST', defaultValue: []).cast<GoalEntity>();
+    return goalList;
   }
+
+  //total money
+  void updateTotalMoney(double totalMoney) {
+    _goalDbBox.put('TOTALMONEY', totalMoney);
+  }
+
+  double loadTotalMoney() => _goalDbBox.get('TOTALMONEY', defaultValue: 0);
 }
