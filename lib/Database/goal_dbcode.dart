@@ -19,5 +19,5 @@ class GoalDB {
     _goalDbBox.put('TOTALMONEY', totalMoney);
   }
 
-  double loadTotalMoney() => _goalDbBox.get('TOTALMONEY', defaultValue: 0);
+  double loadTotalMoney() => _goalDbBox.get('TOTALMONEY', defaultValue: 0.0);
 }
