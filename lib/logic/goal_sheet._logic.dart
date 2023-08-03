@@ -28,6 +28,8 @@ class GoalSheetLogic {
     }
   }
 
+  void onEditGoal() {}
+
   void onDeleteGoal(int index) {
     appState.deleteGoalToListState(index);
   }

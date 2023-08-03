@@ -14,7 +14,10 @@ class _AddGoalBottomSheetState extends State<AddGoalBottomSheet> {
   final goalTarget = TextEditingController();
 
   void onPressSaveButton() {
-    addGoalSheetLogic.onSaveGoal(goalTitle, goalTarget);
+    addGoalSheetLogic.onSaveGoal(
+      goalTitle,
+      goalTarget,
+    );
     Navigator.of(context).pop();
   }
 

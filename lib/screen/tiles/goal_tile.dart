@@ -4,6 +4,7 @@ import 'package:money_management/components/edit_goal_sheet.dart';
 class GoalTile extends StatefulWidget {
   final VoidCallback cashInFunction;
   final VoidCallback deleteFunction;
+  final VoidCallback editFunction;
   final BuildContext context;
   final String goalTitle;
   final double goalTarget;
@@ -17,6 +18,7 @@ class GoalTile extends StatefulWidget {
     required this.context,
     required this.deleteFunction,
     required this.cashInFunction,
+    required this.editFunction,
   }) : super(key: key);
 
   @override
@@ -24,15 +26,6 @@ class GoalTile extends StatefulWidget {
 }
 
 class _GoalTile extends State<GoalTile> {
-  void showEditGoalBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return EditGoalBottomSheet();
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -64,7 +57,7 @@ class _GoalTile extends State<GoalTile> {
                   child: const Icon(Icons.archive),
                 ),
                 OutlinedButton(
-                  onPressed: () => showEditGoalBottomSheet(),
+                  onPressed: widget.editFunction,
                   child: const Icon(Icons.edit),
                 ),
                 const Spacer(),
