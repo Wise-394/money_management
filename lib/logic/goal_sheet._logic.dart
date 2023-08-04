@@ -80,19 +80,44 @@ class GoalSheetLogic {
             goalBalance: goalBalance,
             goalTarget: goalTarget,
             onEditGoal: () => goalSheetLogic.onEditGoal(
-                index,
-                goalTitleEdited.text,
-                double.parse(goalBalanceEdited.text),
-                double.parse(goalTargetEdited.text)),
+                index, goalTitleEdited, goalBalanceEdited, goalTargetEdited),
           );
         });
   }
 
+  bool isNumericString(String input) {
+    return double.tryParse(input) != null;
+  }
+
   void onEditGoal(
-      int index, String goalTitle, double goalBalance, double goalTarget) {
-    if (goalTitle.isNotEmpty && !goalBalance.isNull && !goalBalance.isNull) {
-      GoalEntity goalEntity = GoalEntity(goalTitle, goalTarget, goalBalance);
-      appState.editGoalState(index, goalEntity);
+    int index,
+    TextEditingController goalTitle,
+    TextEditingController goalBalance,
+    TextEditingController goalTarget,
+  ) {
+    String balanceText = goalBalance.text;
+    String targetText = goalTarget.text;
+
+    if (goalTitle.text.isNotEmpty &&
+        balanceText.isNotEmpty &&
+        targetText.isNotEmpty) {
+      if (isNumericString(balanceText) && isNumericString(targetText)) {
+        double goalBalanceValue = double.parse(balanceText);
+        double goalTargetValue = double.parse(targetText);
+
+        GoalEntity goalEntity = GoalEntity(
+          goalTitle.text,
+          goalTargetValue,
+          goalBalanceValue,
+        );
+
+        appState.editGoalState(index, goalEntity);
+        Navigator.pop(context);
+      } else {
+        Navigator.pop(context);
+        // Handle invalid input (non-numeric values)
+      }
+    } else {
       Navigator.pop(context);
     }
   }
