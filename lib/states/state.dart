@@ -64,4 +64,9 @@ class AppState extends ChangeNotifier {
     goalList = dbGoalCode.loadGoalDB();
     print('db succesfully loaded ${goalList.length}');
   }
+
+  void editGoalState(int index, GoalEntity goal) {
+    goalList[index] = goal;
+    notifyListeners();
+  }
 }
