@@ -55,6 +55,9 @@ class _HomePageState extends State<HomePage> {
                   itemCount: goal.length,
                   itemBuilder: (context, index) {
                     return GoalTile(
+                      editFunction: () => GoalSheetLogic(context)
+                          .showEditGoalBottomSheet(index, goal[index].goalTitle,
+                              goal[index].goalBalance, goal[index].goalTarget),
                       cashInFunction: () => GoalSheetLogic(context)
                           .onCashIn(textController, index),
                       deleteFunction: () =>

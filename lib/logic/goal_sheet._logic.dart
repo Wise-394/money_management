@@ -1,8 +1,12 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:money_management/Database/goal_entity.dart';
 import 'package:money_management/components/input_dialog.dart';
 import 'package:money_management/states/state.dart';
 import 'package:provider/provider.dart';
+
+import '../components/edit_goal_sheet.dart';
 
 class GoalSheetLogic {
   final BuildContext context;
@@ -27,8 +31,6 @@ class GoalSheetLogic {
       goalTarget.clear();
     }
   }
-
-  void onEditGoal() {}
 
   void onDeleteGoal(int index) {
     appState.deleteGoalToListState(index);
@@ -58,5 +60,40 @@ class GoalSheetLogic {
       controllerText.clear();
     }
     Navigator.pop(context);
+  }
+
+  void showEditGoalBottomSheet(
+      int index, String goalTitle, double goalBalance, double goalTarget) {
+    var goalSheetLogic = GoalSheetLogic(context);
+    var goalTitleEdited = TextEditingController();
+    var goalBalanceEdited = TextEditingController();
+    var goalTargetEdited = TextEditingController();
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return EditGoalBottomSheet(
+            goalTitleController: goalTitleEdited,
+            goalBalanceController: goalBalanceEdited,
+            goalTargetCOntroller: goalTargetEdited,
+            goalTitle: goalTitle,
+            goalBalance: goalBalance,
+            goalTarget: goalTarget,
+            onEditGoal: () => goalSheetLogic.onEditGoal(
+                index,
+                goalTitleEdited.text,
+                double.parse(goalBalanceEdited.text),
+                double.parse(goalTargetEdited.text)),
+          );
+        });
+  }
+
+  void onEditGoal(
+      int index, String goalTitle, double goalBalance, double goalTarget) {
+    if (goalTitle.isNotEmpty && !goalBalance.isNull && !goalBalance.isNull) {
+      GoalEntity goalEntity = GoalEntity(goalTitle, goalTarget, goalBalance);
+      appState.editGoalState(index, goalEntity);
+      Navigator.pop(context);
+    }
   }
 }
